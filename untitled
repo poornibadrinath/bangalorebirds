@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Tourism Map</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.21.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.21.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v2.1.0/mapbox-gl-directions.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v2.1.0/mapbox-gl-directions.css' type='text/css' />
+<style>
+    .mapboxgl-popup {
+        max-width: 400px;
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
+</style>
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoicG9vcm5pLWJhZHJpbmF0aCIsImEiOiJjaWVoOGFiNWUwMDl2c3JtMXBzcWluaDN5In0.uunHEpdx8grTpnmTwTwxHA';
+
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/poorni-badrinath/ciptdm1z6002kdbnnkdbz76p1',
+    center: [77.577,12.042],
+    dragPan: true,
+    hash: true
+});
+var tourismgeojson = {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "way/63130714",
+      "properties": {
+        "@id": "way/63130714",
+        "leisure": "park",
+        "name": "Lalbagh",
+        "tourism": "attraction",
+          "image":"http://2.bp.blogspot.com/-Va736AiquyM/UwBc_vH4imI/AAAAAAAAASY/1ajfJJLbsws/s1600/kailash-giri-1.jpg"
+
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              83.339155,
+              17.7507044
+            ],
+            [
+              83.3388653,
+              17.749325
+            ],
+            [
+              83.3448694,
+              17.7476447
+            ],
+            [
+              83.345159,
+              17.7492498
+            ],
+            [
+              83.339155,
+              17.7507044
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/134033292",
+      "properties": {
+        "@id": "way/134033292",
+        "name": "Indira Gandhi Zoological Park",
+        "name:te": "ఇందిర గాంధి జూలోజికల్ పార్క్",
+        "tourism": "zoo",
+        "wikipedia": "en:Indira Gandhi Zoological Park",
+          "image": "http://travelguideindia.in/wp-content/uploads/2014/11/indira-gandhi-zoological-park.jpg"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              83.3488535,
+              17.7722711
+            ],
+            [
+              83.34836,
+              17.7720259
+            ],
+            [
+              83.3479094,
+              17.7711881
+            ],
+            [
+              83.3481025,
+              17.7699212
+            ],
+            [
+              83.3485531,
+              17.7680821
+            ],
+            [
+              83.3497118,
+              17.7671626
+            ],
+            [
+              83.3514284,
+              17.7672647
+            ],
+            [
+              83.3569645,
+              17.7674691
+            ],
+            [
+              83.3587669,
+              17.7689812
+            ],
+            [
+              83.3559774,
+              17.7713311
+            ],
+            [
+              83.3488535,
+              17.7722711
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "way/397989468",
+      "properties": {
+        "@id": "way/397989468",
+        "amenity": "place_of_worship",
+        "name": "Simhachalam Temple",
+        "name:te": "సింహాచలం",
+        "religion": "hindu",
+        "source": "Bing",
+        "wikipedia": "en:Simhachalam Temple",
+        "image":"http://discovervizag.in/wp-content/uploads//2014/07/Schalam.jpg"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              83.2509096,
+              17.7665281
+            ],
+            [
+              83.2501525,
+              17.7665367
+            ],
+            [
+              83.2501466,
+              17.766067
+            ],
+            [
+              83.2509037,
+              17.7660584
+            ],
+            [
+              83.2509096,
+              17.7665281
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/245641840",
+      "properties": {
+        "@id": "node/245641840",
+        "alt_name": "Vizag",
+        "capital": "5",
+        "gns:uni": "-2935124",
+        "is_in:continent": "Asia",
+        "is_in:country": "India",
+        "is_in:country_code": "IN",
+        "is_in:state": "State of Andhra Pradesh",
+        "name": "Visakhapatnam",
+        "name:en": "Visakhapatnam",
+        "name:hi": "विशाखापत्तनम",
+        "name:ja": "ヴィシャーカパトナム",
+        "name:kn": "ವಿಶಾಖಪಟ್ಟಣ",
+        "name:mr": "विशाखापट्टणम",
+        "name:or": "ବିଶାଖାପାଟଣା",
+        "name:ru": "Вишакхапатнам",
+        "name:ta": "விசாகப்பட்டினம்",
+        "name:te": "విశాఖపట్నం",
+        "name:uk": "Вішакхапатнам",
+        "pincode": "530001",
+        "place": "city",
+        "place:cca": "a",
+        "population": "1000000",
+        "postal_code": "530001"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.3012842,
+          17.7231276
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/784234009",
+      "properties": {
+        "@id": "node/784234009",
+        "leisure": "park",
+        "name": "Tenneti park",
+        "name:te": "తెన్నేటి పార్క్",
+        "tourism": "attraction",
+        "wikipedia": "en:Tenneti Viswanadham",
+          "image":"http://ssrkhotels.com/wp-content/uploads/2013/12/Tennetipark.jpg"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.3501893,
+          17.7475315
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/784255233",
+      "properties": {
+        "@id": "node/784255233",
+        "addr:city": "visakhapatnam",
+        "name": "Rushikonda",
+        "name:te": "ఋషి కొండ",
+        "place": "suburb",
+        "tourism": "attraction",
+        "wikipedia": "en:Rushikonda Beach",
+          "image":"http://www.thehindu.com/multimedia/dynamic/00484/21VZVISKREG1RUSHIKO_484050f.jpg"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.3859401,
+          17.7899132
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/1068785214",
+      "properties": {
+        "@id": "node/1068785214",
+        "ele": "351",
+        "name": "Kambalakonda",
+        "name:te": "కంబాల కొండ",
+        "natural": "peak",
+        "tourism": "picnic_site",
+        "wikipedia": "en:Thotlakonda",
+          "image":"http://www.smartvizag.com/media/img/Kambala-Konda-2.jpg"
+
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.3399939,
+          17.7794947
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "node/2900563447",
+      "properties": {
+        "@id": "node/2900563447",
+        "highway": "bus_stop",
+        "name": "Tenneti Nagar",
+        "name:te": "తెన్నేటి నగర్",
+          //"image":"http://discovervizag.in/wp-content/uploads//2014/07/Schalam.jpg"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          83.2611701,
+          17.7478028
+        ]
+      }
+    }
+  ]
+};
+
+
+
+    map.on('load', function () {
+    map.addSource("points", {
+        "type": "geojson",
+        "data": tourismgeojson
+
+
+    });
+
+    map.addLayer({
+        "id": "points",
+        "type": "symbol",
+        "source": "points",
+        "layout": {
+            "icon-image": "circle-15",
+            // "text-field": "{title}",
+            "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+            "text-offset": [0, 0.6],
+            "text-anchor": "top"
+        }
+    });
+});
+var popup = new mapboxgl.Popup({
+    closeButton: false,
+    closeOnClick: false
+});
+
+
+map.on('click', function(e) {
+    var features = map.queryRenderedFeatures(e.point, { layers: ['points'] });
+    // Change the cursor style as a UI indicator.
+    map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+
+    if (!features.length) {
+        popup.remove();
+        return;
+    }
+
+    var popupLocation;
+  var feature = features[0];
+    //Get point location of feature
+    if( feature.geometry.type == 'Polygon'){
+      popupLocation = feature.geometry.coordinates[0][0];
+    }else{
+      popupLocation = feature.geometry.coordinates
+    }
+
+
+
+    // Populate the popup and set its coordinates
+    // based on the feature found.
+    if(feature.properties["name:te"]!=undefined){
+
+      popup.setLngLat(popupLocation)
+          .setHTML(feature.properties["name:te"]+' <br> <img src="' + feature.properties["image"] + '"style="height:100px;">')
+          .addTo(map);
+
+
+    } else {
+      popup.setLngLat(popupLocation)
+          .setHTML(feature.properties.name)
+          .addTo(map);
+
+    }
+  });
+  map.addControl(new mapboxgl.Navigation());
+  map.addControl(new mapboxgl.Directions());
+</script>
+
+</body>
+</html>
