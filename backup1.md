@@ -2,10 +2,10 @@
 <html>
 <head>
     <meta charset='utf-8' />
-    <title></title>
+    <title>Bangalore Birds</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.36.0/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.21.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.21.0/mapbox-gl.css' rel='stylesheet' />
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
@@ -13,22 +13,15 @@
 </head>
 <body>
 
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v2.1.0/mapbox-gl-directions.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v2.1.0/mapbox-gl-directions.css' type='text/css' />
 <style>
-
-.marker {
-    display: block;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    padding: 0;
-.mapboxgl-popup {
-    max-width: 200px;
-}
-    
+    .mapboxgl-popup {
+        max-width: 400px;
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
 </style>
-
 <div id='map'></div>
-
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoicG9vcm5pLWJhZHJpbmF0aCIsImEiOiJjaWVoOGFiNWUwMDl2c3JtMXBzcWluaDN5In0.uunHEpdx8grTpnmTwTwxHA';
 
@@ -39,7 +32,7 @@ var map = new mapboxgl.Map({
     dragPan: true,
     hash: true
 });
-var birdspotsgeojson = {
+var tourismgeojson = {
   "type": "FeatureCollection",
   "features": [
     {
@@ -331,32 +324,69 @@ var birdspotsgeojson = {
     map.on('load', function () {
     map.addSource("points", {
         "type": "geojson",
-        "data": birdspotsgeojson
+        "data": tourismgeojson
 
 
     });
 
-    var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/streets-v9',
-    center: [-65.017, -16.457],
-    zoom: 5
+    map.addLayer({
+        "id": "points",
+        "type": "symbol",
+        "source": "points",
+        "layout": {
+            "icon-image": "garden-15",
+            // "text-field": "{title}",
+            "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+            "text-offset": [0, 0.6],
+            "text-anchor": "top"
+        }
+    });
+});
+var popup = new mapboxgl.Popup({
+    closeButton: false,
+    closeOnClick: false
 });
 
-// create the popup
-var popup = new mapboxgl.Popup({offset: 25})
-    .setText("name");
 
-// create DOM element for the marker
-var el = document.createElement('div');
-el.id = 'marker';
+map.on('click', function(e) {
+    var features = map.queryRenderedFeatures(e.point, { layers: ['points'] });
+    // Change the cursor style as a UI indicator.
+    map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
 
-// create the marker
-new mapboxgl.Marker(el, {offset:[-25, -25]})
-    .setLngLat(coordinates)
-    .setPopup(popup) // sets a popup on this marker
-    .addTo(map);
+    if (!features.length) {
+        popup.remove();
+        return;
+    }
 
+    var popupLocation;
+  var feature = features[0];
+    //Get point location of feature
+    if( feature.geometry.type == 'Polygon'){
+      popupLocation = feature.geometry.coordinates[0][0];
+    }else{
+      popupLocation = feature.geometry.coordinates
+    }
+
+
+
+    // Populate the popup and set its coordinates
+    // based on the feature found.
+    if(feature.properties["name"]!=undefined){
+
+      popup.setLngLat(popupLocation)
+          .setHTML(feature.properties["name"]+' <br> <img src="' + feature.properties["image"] + '"style="height:100px;">')
+          .addTo(map);
+
+
+    } else {
+      popup.setLngLat(popupLocation)
+          .setHTML(feature.properties.name)
+          .addTo(map);
+
+    }
+  });
+  map.addControl(new mapboxgl.Navigation());
+  map.addControl(new mapboxgl.Directions());
 </script>
 
 </body>
